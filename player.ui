@@ -1,0 +1,39 @@
+<interface>
+  <object class="GtkDialog" id="dialog1">
+    <child internal-child="vbox">
+      <object class="GtkBox" id="vbox1">
+        <property name="orientation">vertical</property>
+        <property name="border-width">10</property>
+        <child>
+            <object class="GtkLabel" id="song_name">
+                <property name="visible">False</property>
+                <property name="label">Select a folder to play</property>
+            </object>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="hbuttonbox1">
+            <property name="border-width">20</property>
+            <child>
+              <object class="GtkButton" id="last_song_button">
+                <property name="label">⏮</property>
+                <signal name="clicked" handler="last_song_button_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="play_button">
+                  <property name="label">⏯</property>
+                <signal name="clicked" handler="play_button_clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="next_song_button">
+                <property name="label">⏩</property>
+                <signal name="clicked" handler="next_song_button_clicked"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
