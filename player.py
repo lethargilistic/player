@@ -29,6 +29,7 @@ class Player:
         self.title = "Player!"
         self.win = self.builder.get_object("dialog1")
         self.win.connect('destroy', lambda w: Gtk.main_quit())
+        self.win.set_resizable(False)
         self.win.show_all()
 
         #Load player
@@ -47,9 +48,9 @@ class Player:
                     Gtk.STOCK_OPEN,
                     Gtk.ResponseType.OK))
         chooser.run()
-        filename = chooser.get_filename()
+        directory = chooser.get_filename()
         chooser.destroy()
-        return filename
+        return directory
 
 
     def fill_playlist(self):
@@ -75,7 +76,7 @@ class Player:
         self.player.previous()
 
     def play_button_clicked(self):
-        #TODO: Update for MediaListPlayer
+        #TODO: Check if there are songs in the player.
         if self.player.get_state() == vlc.State.Ended: #Play. 
             self.player.play()
         else: #Pause/un-pause
