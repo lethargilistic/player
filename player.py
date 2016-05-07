@@ -19,17 +19,33 @@ class Player:
                 }
         self.builder.connect_signals(handlers)
 
-        #Load player
-        self.playlist_directory = os.path.expanduser("~/Music/DoctorWho/TheFearmonger/")
-        self.player = self.fill_playlist()
-
         #Set up window, display
         self.title = "Player!"
         self.win = self.builder.get_object("dialog1")
         self.win.connect('destroy', lambda w: Gtk.main_quit())
         self.win.show_all()
 
+        #Load player
+        #TODO: Take this out of constructor, activate from taskbar
+        self.playlist_directory = self.select_directory()
+        self.player = self.fill_playlist()
+
+
     ###### ACTIONS
+    def select_directory(self):
+        chooser = Gtk.FileChooserDialog("Please select a playlist directory.",
+                self.win,
+                Gtk.FileChooserAction.SELECT_FOLDER,
+                (Gtk.STOCK_CANCEL,
+                    Gtk.ResponseType.CANCEL,
+                    Gtk.STOCK_OPEN,
+                    Gtk.ResponseType.OK))
+        chooser.run()
+        filename = chooser.get_filename()
+        chooser.destroy()
+        return filename
+
+
     def fill_playlist(self):
         """Returns a vlc.MediaListPlayer with all the mp3 files from the
         self.playlist_directory"""
@@ -58,7 +74,6 @@ class Player:
             self.player.play()
         else: #Pause/un-pause
             self.player.pause()
-        
 
     def next_song_button_clicked(self):
         self.player.next()
