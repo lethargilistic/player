@@ -1,3 +1,9 @@
+'''
+Player is an MP3 player made with Python and Gtk.
+This software is released under the MIT License.
+Copyright © 2016 Mike Overby 
+'''
+
 import gi
 gi.require_version('Gtk', '3.0') 
 from gi.repository import Gtk
