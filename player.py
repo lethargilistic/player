@@ -7,8 +7,11 @@ import vlc
 
 class Player:
     def __init__(self):
+        # Front End
         self.builder = Gtk.Builder()
         self.builder.add_from_file("player.ui")
+        
+        # Connect handlers
         handlers = {
                 "last_song_button_clicked": lambda x: self.last_song_button_clicked(),
                 "play_button_clicked": lambda x: self.play_button_clicked(),
@@ -16,35 +19,28 @@ class Player:
                 }
         self.builder.connect_signals(handlers)
 
-        self.title = "Player!"
-
+        #Load player
         self.playlist_directory = os.path.expanduser("~/Music/DoctorWho/TheFearmonger/")
         self.player = self.fill_playlist()
 
+        #Set up window, display
+        self.title = "Player!"
         self.win = self.builder.get_object("dialog1")
         self.win.connect('destroy', lambda w: Gtk.main_quit())
         self.win.show_all()
 
     ###### ACTIONS
     def fill_playlist(self):
-        # TODO - use vlc.MediaList.add_media([])
-        # MediaList.event_manager()?
-        # MediaListPlayer!!!!!!!!
-
-        #for each mp3 file in directory, 
-        #   create vlc.Media and add to queue
-        print(self.playlist_directory)
+        """Returns a vlc.MediaListPlayer with all the mp3 files from the
+        self.playlist_directory"""
         songs = []
         for roots, dirs, files in os.walk(self.playlist_directory):
-            print(roots)
             for f in files:
                 if f.endswith("mp3"):
                     filepath = os.path.join("file://", self.playlist_directory, f)
-                    print(filepath)
                     songs.append(filepath)
 
         playlist = vlc.MediaList()
-        print(sorted(songs))
         for song in sorted(songs):
             playlist.add_media(vlc.Media(song)) 
         
