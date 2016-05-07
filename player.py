@@ -8,6 +8,7 @@ import gi
 gi.require_version('Gtk', '3.0') 
 from gi.repository import Gtk
 
+import glob
 import os
 import vlc
 
@@ -56,14 +57,9 @@ class Player:
     def fill_playlist(self):
         """Returns a vlc.MediaListPlayer with all the mp3 files from the
         self.playlist_directory"""
-        songs = []
-        for roots, dirs, files in os.walk(self.playlist_directory):
-            for f in files:
-                if f.endswith("mp3"):
-                    filepath = os.path.join("file://", self.playlist_directory, f)
-                    songs.append(filepath)
-
         playlist = vlc.MediaList()
+
+        songs = glob.glob(os.path.join(self.playlist_directory, "*.mp3"))
         for song in sorted(songs):
             playlist.add_media(vlc.Media(song)) 
         
