@@ -13,25 +13,24 @@ Mac would be appreciated.
 
 Installation
 ------------
-.. code:: zsh
-
-    git clone https://github.com/lethargilistic/player.git
-    python3 player.py
-
-Player relies on vlc.py_, maintained by the `VideoLAN Organization`_. A version is included in this repo so you don't need to download it separately. Still, that means you need to install VLC Player for Player to work.
+Player relies on vlc.py_, maintained by the `VideoLAN Organization`_. You need a copy of that file, and you need to install VLC Player for Player to work.
 
 .. _vlc.py: http://git.videolan.org?p=vlc/bindings/python.git;a=tree;f=generated;b=HEAD
 .. _VideoLAN Organization: http://www.videolan.org>
 
 .. code:: zsh
 
+    git clone https://github.com/lethargilistic/player.git
+    cd player
     sudo apt-get install vlc
+    wget -O vlc.py "http://git.videolan.org?p=vlc/bindings/python.git;a=blob_plain;f=generated/vlc.py;hb=HEAD"
+    python3 player.py
 
 License
 -------
 Player, as an application, is released under the MIT License. See LICENSE.txt
 
-Also, vlc.py is released under LGPL 2. As such, a copy of those terms is also included.
+Also, vlc.py is released under LGPL 2.1. As such, a copy of those terms is also included.
 
 TODO
 ----
