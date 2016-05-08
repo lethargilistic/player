@@ -34,12 +34,18 @@ class Player:
         self.win.show_all()
 
         #Load player
-        #TODO: Take this out of constructor, activate from taskbar
-        self.playlist_directory = self.select_directory()
-        self.player = self.fill_playlist()
-
+        self.choose_playlist()
 
     ###### ACTIONS
+    def choose_playlist(self):
+        #TODO: activate from taskbar
+        self.playlist_directory = self.select_directory()
+        self.player = self.fill_playlist()
+        #TODO: The library seems broken. Awaiting patch.
+        #self.event_manager = self.player.event_manager()
+        #self.event_manager.event_attach(vlc.EventType.MediaListPlayerNextItemSet,
+        #                               self.songchanged(listplayer=self.player))
+
     def select_directory(self):
         chooser = Gtk.FileChooserDialog("Please select a playlist directory.",
                 self.win,
@@ -67,7 +73,26 @@ class Player:
         player.set_media_list(playlist)
         return player
 
+    def fetch_tracknumber(self, media):
+        media.parse()
+        return int(media.get_meta(vlc.Meta.TrackNumber))
+
+    def fetch_art(self, media):
+        media.parse()
+        return media.get_meta(vlc.Meta.ArtworkURL)
+
+    def fetch_title(self, media):
+        media.parse()
+        return media.get_meta(vlc.Meta.Title)
+
     ###### EVENTS
+    def songchanged(self, listplayer):
+        #TODO, update picture and text
+        media = listplayer.get_media_player().get_media()
+        self.builder.get_object("song_name").set_label(self.fetch_title(media))
+        print(self.builder.get_object("song_name").props.label)
+        print("CHANGE")
+
     def last_song_button_clicked(self):
         self.player.previous()
 
